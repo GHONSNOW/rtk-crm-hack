@@ -1,23 +1,34 @@
-export type PipelineStage = 
-  | 'LEAD'            // 1. Поиск контакта / Заявка
-  | 'MEETING'         // 2. Установочная встреча
-  | 'DOCS_SIGNING'    // 3. Согласование и подписание ЭДО
-  | 'TEACHER_TRAIN'   // 4. Обучение преподавателей
-  | 'PROGRAM_UPDATE'  // 5. Внедрение ПО в программу
-  | 'MONITORING';     // 6. Активный поток / Аналитика
+export type UserRole = 'USER' | 'MANAGER' | 'ADMIN'; // КАМ, Руководитель, Админ
 
-export interface University {
+export interface WorkflowStage {
   id: string;
   name: string;
-  city: string;
-  contactPerson: string;
-  contactRole: string;
-  email: string;
-  phone: string;
-  productName: string;      // Например: РЕД ОС, Облако РТК
-  stage: PipelineStage;
-  studentsCount: number;
-  groupsCount: number;
-  docsStatus: 'ready' | 'pending' | 'signed';
-  progress: number;         // 0 - 100%
+  order: number;
+}
+
+export interface UniversityRecord {
+  id: string;
+  universityName: string;    // Название ВУЗа
+  vendor: string;            // Вендор (напр. Ростелеком, РЕД СОФТ)
+  software: string;          // ПО
+  contractNumber: string;    // Номер договора
+  licenseSigned: boolean;    // Подписание лицензии
+  licenseDurationYears: number; // Срок действия лицензии (год)
+  transferStatus: string;    // Статус по передачи
+  managerName: string;       // ФИО Менеджера (КАМ)
+  universityResponsible: string; // Ответственные от ВУЗа
+  comment: string;           // Комментарий
+  stageId: string;           // Текущий статус workflow
+  attachedFiles: string[];   // Прикрепленные файлы
+}
+
+export interface EducationProgramMetric {
+  id: string;
+  name: string;
+  universityName: string;
+  software: string;
+  applicationsCount: number; // Заявки на обучение
+  studentsCount: number;     // Количество обучающихся
+  streamsCount: number;      // Количество параллельных потоков
+  demandScore: number;       // Индекс востребованности
 }
